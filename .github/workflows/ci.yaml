@@ -1,0 +1,39 @@
+name: "Dairy Management System pipeline/workflow" # name of the pipeline
+on: #events from on to line 6, when we push the event is triggered
+    push:
+        branches:
+            - master
+            - main
+jobs:
+    build-and-test: # job name
+        runs-on: ubuntu-latest # runner machine
+        steps:
+            - name: "Setup Node Js"
+              uses: "actions/setup-node@v4" # helps in defining github actions
+              with: # input to predefined actions of github
+                node-version: "21"
+            - name: "Check node version"
+              run: node --version # linux command with run
+
+            - name: "Check os of runner"
+              run: echo "the running os is ${{runner.os}}"
+            - name: "Clone the repo"
+              uses: "actions/checkout@v2"
+
+            - name: Check current directory
+              run: pwd && ls -la
+
+            - name: "Install dependencies"
+              run: "npm install"
+              working-directory: ./my-dairy
+            - name: "Run Build"
+              run: npm run build
+              working-directory: ./my-dairy
+
+            - name: "Upload product-ready build files"
+              uses: actions/upload-artifact@v4
+              with:
+                name: build
+                path: my-dairy/dist
+           
+
