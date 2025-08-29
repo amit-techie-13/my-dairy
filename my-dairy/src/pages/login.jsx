@@ -23,7 +23,7 @@ const navigate = useNavigate();
        toast.success(resp?.message)
        setTimeout(() => {
             navigate("/home");  // change URL to /login
-          }, 1500);
+          }, 1000);
        }else{
         toast.error(resp?.message)
         console.log("🚀 ~ handleSubmit ~ resp?.message:", resp?.message)
