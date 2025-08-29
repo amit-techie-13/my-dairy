@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { loginUser } from "../apis/userApi";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SignUp() {
   const [form, setForm] = useState({
@@ -9,24 +9,24 @@ export default function SignUp() {
     password: "",
   });
 const navigate = useNavigate();
-
+const [loading, setLoading] = useState(false);
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
     const handleSubmit = async (e) => {
       e.preventDefault();
-      console.log("Form Submitted:", form);
+       setLoading(true);
        let resp = await loginUser(form)
-       console.log("🚀 ~ handleSubmit ~ resp:", resp)
        if(resp?.success){
+         setLoading(false);
        toast.success(resp?.message)
        setTimeout(() => {
             navigate("/home");  // change URL to /login
           }, 1000);
        }else{
         toast.error(resp?.message)
-        console.log("🚀 ~ handleSubmit ~ resp?.message:", resp?.message)
+        setLoading(false);
        }
       // later: send to backend API
     };
@@ -66,18 +66,29 @@ const navigate = useNavigate();
       />
 
       {/* Submit */}
-      <button
-        type="submit"
-        className="bg-gradient-to-b from-amber-700 via-amber-500 to-amber-200 font-semibold py-2 rounded-lg transition duration-200"
-      >
-        Log In
-      </button>
+           <button
+  type="submit"
+  disabled={loading}  // prevent double submit
+  className={`bg-gradient-to-b from-amber-700 via-amber-500 to-amber-200 
+              font-semibold py-2 px-4 rounded-lg 
+              transition duration-300 ease-in-out 
+              hover:from-amber-600 hover:via-amber-400 hover:to-amber-100 
+              hover:scale-105 hover:shadow-lg cursor-pointer
+              ${loading ? "opacity-70 cursor-not-allowed" : ""}`}
+>
+  {loading ? "Teleporting you inside... ... " : "Log In"}
+</button>
 
       <p className="text-sm bg-gradient-to-b from-amber-900 via-amber-700 to-amber-400 bg-clip-text text-transparent text-center">
         Does not  have an account?{" "}
-        <a href="/" className="bg-gradient-to-b from-amber-900 via-amber-700 to-amber-400 bg-clip-text text-transparent hover:underline">
-          Sign Up
-        </a>
+          <Link
+  to="/"
+  className="bg-gradient-to-b from-amber-900 via-amber-700 to-amber-600 bg-clip-text 
+             font-semibold py-2 px-4 rounded-lg 
+              cursor-pointer"
+>
+  Sign Up
+</Link>
       </p>
     </form>
   );
