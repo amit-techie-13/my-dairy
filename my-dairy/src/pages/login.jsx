@@ -1,20 +1,35 @@
 import React, { useState } from "react";
+import { loginUser } from "../apis/userApi";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
   const [form, setForm] = useState({
     phone: "",
     password: "",
   });
+const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form Submitted:", form);
-    // later: send to backend API
-  };
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      console.log("Form Submitted:", form);
+       let resp = await loginUser(form)
+       console.log("🚀 ~ handleSubmit ~ resp:", resp)
+       if(resp?.success){
+       toast.success(resp?.message)
+       setTimeout(() => {
+            navigate("/home");  // change URL to /login
+          }, 1500);
+       }else{
+        toast.error(resp?.message)
+        console.log("🚀 ~ handleSubmit ~ resp?.message:", resp?.message)
+       }
+      // later: send to backend API
+    };
 
   return (
     <form

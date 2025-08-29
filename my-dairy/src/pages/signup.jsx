@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-
+import { signUpUser } from "../apis/userApi";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 export default function SignUp() {
   const [form, setForm] = useState({
     name: "",
@@ -10,10 +12,22 @@ export default function SignUp() {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form Submitted:", form);
+     let resp = await signUpUser(form)
+     console.log("🚀 ~ handleSubmit ~ resp:", resp)
+     if(resp?.success){
+     toast.success(resp?.message)
+     setTimeout(() => {
+          navigate("/login");  // change URL to /login
+        }, 1500);
+     }else{
+      toast.error(resp?.message)
+      console.log("🚀 ~ handleSubmit ~ resp?.message:", resp?.message)
+     }
     // later: send to backend API
   };
 
