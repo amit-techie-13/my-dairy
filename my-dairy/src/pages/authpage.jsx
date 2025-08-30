@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { signUpUser, loginUser } from "../apis/userApi";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-
+import sam from '../assets/samarooh.png'
 export default function AuthPage({ mode = "signup" }) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -67,12 +67,18 @@ export default function AuthPage({ mode = "signup" }) {
           {/* Header */}
           <div className="flex flex-col items-center">
 
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-amber-500 to-yellow-400 flex items-center justify-center shadow-md mb-3">
-              <span aria-hidden className="text-xl">🎉</span>
-            </div>
+           
+              <span aria-hidden className="text-xl">
+  <img 
+    src={sam}   // save the cow image into your public/ folder
+    alt="cow with milk"
+    className="w-14 h-14 inline-block rounded-full "
+  />
+</span>
+            
 
             <h2
-              className={`text-2xl sm:text-3xl font-extrabold bg-gradient-to-b from-amber-900 via-amber-700 to-amber-400 bg-clip-text text-transparent
+              className={`text-2xl sm:text-3xl font-extrabold bg-gradient-to-r from-blue-900 via-teal-700 to-teal-400 bg-clip-text text-transparent
               `}
             >
               {mode === "signup" ? "Sign Up" : "Login"}
@@ -139,7 +145,7 @@ export default function AuthPage({ mode = "signup" }) {
             type="submit"
             disabled={loading}
             className={`w-full inline-flex items-center justify-center gap-3 rounded-xl px-4 py-3 font-semibold text-white 
-            ${"bg-gradient-to-r from-amber-500 via-amber-400 to-amber-300 shadow-lg"
+            ${"bg-gradient-to-r from-blue-500 via-teal-400 to-teal-300 shadow-lg"
               } 
               transition duration-200
               ${loading ? "opacity-70 cursor-not-allowed" : "hover:scale-105 hover:shadow-lg"}`}
@@ -183,7 +189,7 @@ export default function AuthPage({ mode = "signup" }) {
                 Already have an account?{" "}
                 <Link
                   to="/login"
-                  className="text-amber-600 font-semibold hover:underline"
+                  className="text-teal-600 font-semibold hover:underline"
                 >
                   Log in
                 </Link>
@@ -193,7 +199,7 @@ export default function AuthPage({ mode = "signup" }) {
                 Don’t have an account?{" "}
                 <Link
                   to="/"
-                  className="text-amber-600 font-semibold hover:underline"
+                  className="text-teal-600 font-semibold hover:underline"
                 >
                   Sign Up
                 </Link>
