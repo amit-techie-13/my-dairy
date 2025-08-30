@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import AuthPage from "./pages/authPage"; // <-- new combined page
+import AuthPage from "./pages/authpage"; // <-- new combined page
 import Home from "./pages/home";
 
 // simple auth check function (for now with localStorage)

@@ -3,7 +3,6 @@ import { API_URL } from "../constant";
 
 export const signUpUser = async (formData) => {
     let url = `${API_URL}/signup`
-    console.log("🚀 ~ signUpUser ~ url:", url)
     try {
         const response = await axios.post(
             url,
