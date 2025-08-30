@@ -2,9 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import Entry from "./pages/entry";
-import SignUp from "./pages/signup";
-import Login from "./pages/login";
+import AuthPage from "./pages/authPage"; // <-- new combined page
 import Home from "./pages/home";
 
 // simple auth check function (for now with localStorage)
@@ -16,11 +14,11 @@ function App() {
   return (
     <>
       <Routes>
-        {/* Entry layout for auth */}
-        <Route element={<Entry />}>
-          <Route path="/" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-        </Route>
+        {/* Signup */}
+        <Route path="/" element={<AuthPage mode="signup" />} />
+
+        {/* Login */}
+        <Route path="/login" element={<AuthPage mode="login" />} />
 
         {/* Protected route for Home */}
         <Route
